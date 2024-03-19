@@ -1,18 +1,20 @@
 package com.example.androidotsintroale
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidotsintroale.Result
 
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MisingInlfatedId")
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         // Botão de envio de informações
         val btnEnviar = findViewById<Button>(R.id.btn_enviar)
@@ -20,18 +22,42 @@ class MainActivity : AppCompatActivity() {
         val txtResult  = findViewById<TextView>(R.id.txt_result)
         // Inserir informações
         val edText = findViewById<EditText>(R.id.edText)
+        // Abrir nova tela
+        val abrirNovaTela = findViewById<Button>(R.id.btnNovaTela)
 
+        // Variável que armazena informaões inseridas
         val inputName = edText.text
 
         // Botão de envio de informações
-              btnEnviar.setOnClickListener {
+        btnEnviar.setOnClickListener{
+            // txtResult.text = "Danilo de Souza Miguel"
 
-                  if(inputName.isBlank()) {
-                      edText.error = "Este campo não pode ser vazio"
-                  }else {
+            // Verificar se existe algo digitado no campo
+            if(inputName.isBlank()){
+                edText.error = "Esse campo não pode ser vazio"
+            }else{
+                txtResult.text = edText.text
+            }
 
-                      txtResult.text = edText.text
-                  }
         }
+        // Botão para abrir a nova tela
+        abrirNovaTela.setOnClickListener{
+
+            // Conversão da informação para String
+            val nomeDigitado = edText.text.toString()
+
+            // Criação da intenção
+            val abrirNovaTela = Intent(this, Result::class.java)
+
+            // Envio da informação para a outra Activity
+            abrirNovaTela.putExtra("RESULTADO", nomeDigitado )
+
+            // Execução da intenção
+            startActivity(abrirNovaTela)
+
+
+        }
+
+
     }
 }
